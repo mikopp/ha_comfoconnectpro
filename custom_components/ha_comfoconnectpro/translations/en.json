@@ -475,7 +475,7 @@
         "name": "Temperature profile",
         "state": {
           "comfort": "Comfort",
-          "eco": "Eco",
+          "cool": "Cool",
           "warm": "Warm"
         }
       },

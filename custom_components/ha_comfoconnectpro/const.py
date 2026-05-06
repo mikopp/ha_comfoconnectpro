@@ -250,6 +250,10 @@ C_CO2_SENSOR_ZONE_6 = "co2_sensor_zone_6"
 C_CO2_SENSOR_ZONE_7 = "co2_sensor_zone_7"
 C_CO2_SENSOR_ZONE_8 = "co2_sensor_zone_8"
 C_FILTER_DAYS_REMAINING = "filter_days_remaining"
+C_EXHAUST_AIRFLOW = "exhaust_airflow"
+C_SUPPLY_FAN_SPEED = "supply_fan_speed"
+C_EXHAUST_FAN_SPEED = "exhaust_fan_speed"
+C_BYPASS_STATE = "bypass_state"
 
 C_ERROR_FLAG = "error_flag"
 C_STANDBY = "standby"
@@ -495,6 +499,34 @@ ENTITIES_DICT: Dict[str, Dict[str, Any]] = {
         "REG": 25,
         "NAME": "Filter ersetzen in",
         "UNIT": "d",
+        "DT": C_DT_UINT16,
+    },
+    C_EXHAUST_AIRFLOW: {
+        "RT": C_REG_TYPE_INPUT_REGISTERS,
+        "REG": 26,
+        "NAME": "Fortluft Ventilator-Volumen",
+        "UNIT": "m³",
+        "DT": C_DT_UINT16,
+    },
+    C_SUPPLY_FAN_SPEED: {
+        "RT": C_REG_TYPE_INPUT_REGISTERS,
+        "REG": 28,
+        "NAME": "Zuluft Ventilator-Drehzahl",
+        "UNIT": "rpm",
+        "DT": C_DT_UINT16,
+    },
+    C_EXHAUST_FAN_SPEED: {
+        "RT": C_REG_TYPE_INPUT_REGISTERS,
+        "REG": 29,
+        "NAME": "Fortluft Ventilator-Drehzahl",
+        "UNIT": "rpm",
+        "DT": C_DT_UINT16,
+    },
+    C_BYPASS_STATE: {
+        "RT": C_REG_TYPE_INPUT_REGISTERS,
+        "REG": 33,
+        "NAME": "Bypass-Status",
+        "UNIT": "%",
         "DT": C_DT_UINT16,
     },
     # DISCRETE_INPUTS
@@ -892,6 +924,9 @@ def _unit_mapping(
         return "‰", None, SensorStateClass.MEASUREMENT
     if u == "%":
         return "%", None, SensorStateClass.MEASUREMENT
+
+    if u.lower() in {"rpm", "1/min", "u/min"}:
+        return "rpm", None, SensorStateClass.MEASUREMENT
 
     # PPM, Anteil
     if u == "ppm":

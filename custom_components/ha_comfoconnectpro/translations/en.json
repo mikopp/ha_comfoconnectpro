@@ -389,6 +389,18 @@
       "airflow": {
         "name": "Supply fan volume"
       },
+      "exhaust_airflow": {
+        "name": "Exhaust fan volume"
+      },
+      "supply_fan_speed": {
+        "name": "Supply fan speed"
+      },
+      "exhaust_fan_speed": {
+        "name": "Exhaust fan speed"
+      },
+      "bypass_state": {
+        "name": "Bypass state"
+      },
       "room_temperature": {
         "name": "Room air temperature"
       },

@@ -389,6 +389,18 @@
       "airflow": {
         "name": "Zuluft Ventilator-Volumen"
       },
+      "exhaust_airflow": {
+        "name": "Fortluft Ventilator-Volumen"
+      },
+      "supply_fan_speed": {
+        "name": "Zuluft Ventilator-Drehzahl"
+      },
+      "exhaust_fan_speed": {
+        "name": "Fortluft Ventilator-Drehzahl"
+      },
+      "bypass_state": {
+        "name": "Bypass-Status"
+      },
       "room_temperature": {
         "name": "Raumlufttemperatur"
       },

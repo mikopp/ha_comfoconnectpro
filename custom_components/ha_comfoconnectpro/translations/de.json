@@ -466,9 +466,9 @@
         "name": "Lüftungsstufe",
         "state": {
           "away": "Außer Haus",
-          "preset_1": "Voreinstellung 1",
-          "preset_2": "Voreinstellung 2",
-          "preset_3": "Voreinstellung 3"
+          "sleep": "Schlafen",
+          "home": "Zuhause",
+          "boost": "Boost"
         }
       },
       "temperature_profile": {
@@ -489,11 +489,14 @@
       }
     },
     "climate": {
-      "external_setpoint": {
-        "name": "Externer Sollwert"
+      "ventilation_climate": {
+        "name": "Klima"
       }
     },
     "number": {
+      "external_setpoint": {
+        "name": "Externer Sollwert"
+      },
       "boost_time": {
         "name": "Boost-Zeit"
       }

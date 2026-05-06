@@ -514,9 +514,9 @@ ENTITIES_DICT: Dict[str, Dict[str, Any]] = {
         "DT": C_DT_UINT16,  # byte -> in 16 Bit Register
         "VALUES": {
             0: "away",
-            1: "preset_1",
-            2: "preset_2",
-            3: "preset_3",
+            1: "sleep",
+            2: "home",
+            3: "boost",
             "default": 2,
         },
     },
@@ -544,6 +544,7 @@ ENTITIES_DICT: Dict[str, Dict[str, Any]] = {
         "MAX": 35.0,
         "UNIT": "°C",
         "DT": C_DT_UINT16,
+        "PF": Platform.NUMBER,
         # Hinweis: funktioniert nur im Modus 2
     },
     C_BOOST_TIME: {

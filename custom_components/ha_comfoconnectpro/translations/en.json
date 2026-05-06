@@ -466,9 +466,9 @@
         "name": "Ventilation preset",
         "state": {
           "away": "Away",
-          "preset_1": "Preset 1",
-          "preset_2": "Preset 2",
-          "preset_3": "Preset 3"
+          "sleep": "Sleep",
+          "home": "Home",
+          "boost": "Boost"
         }
       },
       "temperature_profile": {
@@ -489,11 +489,14 @@
       }
     },
     "climate": {
-      "external_setpoint": {
-        "name": "External setpoint"
+      "ventilation_climate": {
+        "name": "Climate"
       }
     },
     "number": {
+      "external_setpoint": {
+        "name": "External setpoint"
+      },
       "boost_time": {
         "name": "Boost time"
       }

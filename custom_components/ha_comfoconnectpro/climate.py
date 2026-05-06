@@ -15,34 +15,25 @@ from homeassistant.components.climate.const import (
     PRESET_HOME,
     PRESET_SLEEP,
 )
-from homeassistant.const import CONF_NAME, UnitOfTemperature
+from homeassistant.const import UnitOfTemperature
 from homeassistant.core import callback
 
 from .const import (
-    ATTR_MANUFACTURER,
     C_STANDBY,
     C_SUPPLY_HUMIDITY,
     C_SUPPLY_TEMPERATURE,
     C_TEMPERATURE_PROFILE,
     C_VENTILATION_PRESET,
-    DEFAULT_NAME,
-    DOMAIN,
     MyClimateEntityDescription,
 )
-from .entity_common import HubBackedEntity
+from .entity_common import HubBackedEntity, get_hub_and_device_info
 
 _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(hass, entry, async_add_entities):
     """Set up climate entity from config entry."""
-    hub_name = entry.options.get(CONF_NAME, entry.data[CONF_NAME])
-    hub = hass.data[DOMAIN][hub_name]["hub"]
-    device_info = {
-        "identifiers": {(DOMAIN, entry.entry_id)},
-        "name": DEFAULT_NAME,
-        "manufacturer": ATTR_MANUFACTURER,
-    }
+    hub_name, hub, device_info = get_hub_and_device_info(hass, entry)
     description = MyClimateEntityDescription(
         key="ventilation_climate",
         name="Climate",

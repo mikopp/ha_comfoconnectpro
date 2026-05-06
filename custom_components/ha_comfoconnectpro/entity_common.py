@@ -86,6 +86,18 @@ class HubBackedEntity(Entity):
         return f"{self._entry_id}_{self.entity_description.key}"
 
 
+def get_hub_and_device_info(hass, entry) -> tuple:
+    """Return (hub_name, hub, device_info) for a config entry."""
+    hub_name = entry.options.get(CONF_NAME, entry.data[CONF_NAME])
+    hub = hass.data[DOMAIN][hub_name]["hub"]
+    device_info = {
+        "identifiers": {(DOMAIN, entry.entry_id)},
+        "name": DEFAULT_NAME,
+        "manufacturer": ATTR_MANUFACTURER,
+    }
+    return hub_name, hub, device_info
+
+
 async def setup_platform_from_types(
     hass,
     entry,
@@ -94,14 +106,7 @@ async def setup_platform_from_types(
     entity_cls: Type[T],
 ) -> bool:
     """Einheitlicher Setup-Helper für alle Plattformen."""
-    hub_name = entry.options.get(CONF_NAME, entry.data[CONF_NAME])
-    hub = hass.data[DOMAIN][hub_name]["hub"]
-
-    device_info = {
-        "identifiers": {(DOMAIN, entry.entry_id)},
-        "name": DEFAULT_NAME,
-        "manufacturer": ATTR_MANUFACTURER,
-    }
+    hub_name, hub, device_info = get_hub_and_device_info(hass, entry)
 
     entities: List[T] = [
         entity_cls(hub_name, hub, device_info, desc) for desc in types_dict.values()

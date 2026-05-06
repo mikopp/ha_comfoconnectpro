@@ -20,6 +20,7 @@ from homeassistant.core import callback
 
 from .const import (
     ATTR_MANUFACTURER,
+    C_STANDBY,
     C_SUPPLY_HUMIDITY,
     C_SUPPLY_TEMPERATURE,
     C_TEMPERATURE_PROFILE,
@@ -82,11 +83,14 @@ class MyClimate(HubBackedEntity, ClimateEntity):
         if supply_hum is not None:
             self._attr_current_humidity = int(supply_hum)
 
-        profile = self._hub.data.get(C_TEMPERATURE_PROFILE)
-        if profile is not None:
-            self._attr_hvac_action = self._PROFILE_TO_ACTION.get(
-                profile, HVACAction.FAN
-            )
+        if self._hub.data.get(C_STANDBY):
+            self._attr_hvac_action = HVACAction.IDLE
+        else:
+            profile = self._hub.data.get(C_TEMPERATURE_PROFILE)
+            if profile is not None:
+                self._attr_hvac_action = self._PROFILE_TO_ACTION.get(
+                    profile, HVACAction.FAN
+                )
 
         preset = self._hub.data.get(C_VENTILATION_PRESET)
         if preset is not None:

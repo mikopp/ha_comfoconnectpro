@@ -4,7 +4,6 @@ import logging
 
 from homeassistant.components.climate import (
     ClimateEntity,
-    ClimateEntityFeature,
     HVACAction,
     HVACMode,
 )
@@ -22,23 +21,23 @@ from .const import (
     C_SUPPLY_TEMPERATURE,
     C_TEMPERATURE_PROFILE,
     C_VENTILATION_PRESET,
+    CLIMATE_TYPES,
     MyClimateEntityDescription,
 )
-from .entity_common import HubBackedEntity, get_hub_and_device_info
+from .entity_common import HubBackedEntity, setup_platform_from_types
 
 _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(hass, entry, async_add_entities):
     """Set up climate entity from config entry."""
-    hub_name, hub, device_info = get_hub_and_device_info(hass, entry)
-    description = MyClimateEntityDescription(
-        key="ventilation_climate",
-        name="Climate",
-        translation_key="ventilation_climate",
-        supported_features=ClimateEntityFeature.PRESET_MODE,
+    return await setup_platform_from_types(
+        hass=hass,
+        entry=entry,
+        async_add_entities=async_add_entities,
+        types_dict=CLIMATE_TYPES,
+        entity_cls=MyClimate,
     )
-    async_add_entities([MyClimate(hub_name, hub, device_info, description)])
 
 
 class MyClimate(HubBackedEntity, ClimateEntity):

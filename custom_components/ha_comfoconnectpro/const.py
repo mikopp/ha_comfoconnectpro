@@ -12,7 +12,12 @@ from homeassistant.components.climate import (
     ClimateEntityFeature,
 )
 from homeassistant.components.select import SelectEntityDescription
-from homeassistant.components.sensor import *
+from homeassistant.components.sensor import (
+    SensorDeviceClass,
+    SensorEntity,
+    SensorEntityDescription,
+    SensorStateClass,
+)
 from homeassistant.components.binary_sensor import (
     BinarySensorDeviceClass,
     BinarySensorEntity,
@@ -935,7 +940,14 @@ def init():
     thismodule.BINARYSENSOR_TYPES = {}
     thismodule.SENSOR_TYPES = {}
     thismodule.SELECT_TYPES = {}
-    thismodule.CLIMATE_TYPES = {}
+    thismodule.CLIMATE_TYPES = {
+        "ventilation_climate": MyClimateEntityDescription(
+            key="ventilation_climate",
+            name="Climate",
+            translation_key="ventilation_climate",
+            supported_features=ClimateEntityFeature.PRESET_MODE,
+        )
+    }
     thismodule.NUMBER_TYPES = {}
     thismodule.BINARY_TYPES = {}
 

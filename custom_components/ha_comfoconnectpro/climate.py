@@ -63,6 +63,15 @@ class MyClimate(HubBackedEntity, ClimateEntity):
         "warm": HVACAction.HEATING,
     }
 
+    # Maps device ventilation preset labels to HA built-in preset names
+    _DEVICE_TO_PRESET: dict[str, str] = {
+        "away": PRESET_AWAY,
+        "low": PRESET_SLEEP,
+        "medium": PRESET_HOME,
+        "high": PRESET_BOOST,
+    }
+    _PRESET_TO_DEVICE: dict[str, str] = {v: k for k, v in _DEVICE_TO_PRESET.items()}
+
     def __init__(self, platform_name, hub, device_info, description):
         super().__init__(platform_name, hub, device_info, description)
         self._attr_hvac_modes = [HVACMode.AUTO]
@@ -94,11 +103,12 @@ class MyClimate(HubBackedEntity, ClimateEntity):
 
         preset = self._hub.data.get(C_VENTILATION_PRESET)
         if preset is not None:
-            self._attr_preset_mode = preset
+            self._attr_preset_mode = self._DEVICE_TO_PRESET.get(preset, PRESET_HOME)
 
         self.async_write_ha_state()
 
     async def async_set_preset_mode(self, preset_mode: str) -> None:
         """Set ventilation preset."""
         self._attr_preset_mode = preset_mode
-        await self._hub.write_entity_value(C_VENTILATION_PRESET, preset_mode)
+        device_value = self._PRESET_TO_DEVICE.get(preset_mode, "medium")
+        await self._hub.write_entity_value(C_VENTILATION_PRESET, device_value)

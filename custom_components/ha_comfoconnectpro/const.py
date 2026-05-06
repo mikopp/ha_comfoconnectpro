@@ -514,9 +514,9 @@ ENTITIES_DICT: Dict[str, Dict[str, Any]] = {
         "DT": C_DT_UINT16,  # byte -> in 16 Bit Register
         "VALUES": {
             0: "away",
-            1: "sleep",
-            2: "home",
-            3: "boost",
+            1: "low",
+            2: "medium",
+            3: "high",
             "default": 2,
         },
     },

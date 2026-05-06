@@ -466,9 +466,9 @@
         "name": "Lüftungsstufe",
         "state": {
           "away": "Außer Haus",
-          "sleep": "Schlafen",
-          "home": "Zuhause",
-          "boost": "Boost"
+          "low": "Niedrig",
+          "medium": "Mittel",
+          "high": "Hoch"
         }
       },
       "temperature_profile": {

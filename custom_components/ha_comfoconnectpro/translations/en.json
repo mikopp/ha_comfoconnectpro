@@ -466,9 +466,9 @@
         "name": "Ventilation preset",
         "state": {
           "away": "Away",
-          "sleep": "Sleep",
-          "home": "Home",
-          "boost": "Boost"
+          "low": "Low",
+          "medium": "Medium",
+          "high": "High"
         }
       },
       "temperature_profile": {

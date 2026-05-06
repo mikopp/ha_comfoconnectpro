@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import logging
-from typing import Any
 
 from homeassistant.components.climate import (
     ClimateEntity,
@@ -15,7 +14,6 @@ from homeassistant.components.climate.const import (
     PRESET_HOME,
     PRESET_SLEEP,
 )
-from homeassistant.const import UnitOfTemperature
 from homeassistant.core import callback
 
 from .const import (
@@ -68,8 +66,8 @@ class MyClimate(HubBackedEntity, ClimateEntity):
         self._attr_hvac_modes = [HVACMode.AUTO]
         self._attr_hvac_mode = HVACMode.AUTO
         self._attr_hvac_action = HVACAction.FAN
-        self._attr_temperature_unit = UnitOfTemperature.CELSIUS
-        self._attr_supported_features = ClimateEntityFeature.PRESET_MODE
+        self._attr_temperature_unit = description.temperature_unit
+        self._attr_supported_features = description.supported_features
         self._attr_preset_modes = [PRESET_AWAY, PRESET_SLEEP, PRESET_HOME, PRESET_BOOST]
         self._attr_preset_mode = PRESET_HOME
 

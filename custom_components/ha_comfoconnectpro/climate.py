@@ -59,7 +59,7 @@ class MyClimate(HubBackedEntity, ClimateEntity):
 
     _PROFILE_TO_ACTION: dict[str, HVACAction] = {
         "comfort": HVACAction.FAN,
-        "eco": HVACAction.COOLING,
+        "cool": HVACAction.COOLING,
         "warm": HVACAction.HEATING,
     }
 

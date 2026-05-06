@@ -525,7 +525,7 @@ ENTITIES_DICT: Dict[str, Dict[str, Any]] = {
         "REG": 1,
         "NAME": "Temperaturprofil",
         "DT": C_DT_UINT16,  # byte -> in 16 Bit Register
-        "VALUES": {0: "comfort", 1: "eco", 2: "warm", "default": 0},
+        "VALUES": {0: "comfort", 1: "cool", 2: "warm", "default": 0},
         # Hinweis: funktioniert nur im Modus 0 oder 1
     },
     C_TEMPERATURE_PROFILE_MODE: {

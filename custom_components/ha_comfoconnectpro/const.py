@@ -12,7 +12,12 @@ from homeassistant.components.climate import (
     ClimateEntityFeature,
 )
 from homeassistant.components.select import SelectEntityDescription
-from homeassistant.components.sensor import *
+from homeassistant.components.sensor import (
+    SensorDeviceClass,
+    SensorEntity,
+    SensorEntityDescription,
+    SensorStateClass,
+)
 from homeassistant.components.binary_sensor import (
     BinarySensorDeviceClass,
     BinarySensorEntity,
@@ -514,9 +519,9 @@ ENTITIES_DICT: Dict[str, Dict[str, Any]] = {
         "DT": C_DT_UINT16,  # byte -> in 16 Bit Register
         "VALUES": {
             0: "away",
-            1: "preset_1",
-            2: "preset_2",
-            3: "preset_3",
+            1: "low",
+            2: "medium",
+            3: "high",
             "default": 2,
         },
     },
@@ -544,6 +549,7 @@ ENTITIES_DICT: Dict[str, Dict[str, Any]] = {
         "MAX": 35.0,
         "UNIT": "°C",
         "DT": C_DT_UINT16,
+        "PF": Platform.NUMBER,
         # Hinweis: funktioniert nur im Modus 2
     },
     C_BOOST_TIME: {
@@ -934,7 +940,14 @@ def init():
     thismodule.BINARYSENSOR_TYPES = {}
     thismodule.SENSOR_TYPES = {}
     thismodule.SELECT_TYPES = {}
-    thismodule.CLIMATE_TYPES = {}
+    thismodule.CLIMATE_TYPES = {
+        "ventilation_climate": MyClimateEntityDescription(
+            key="ventilation_climate",
+            name="Climate",
+            translation_key="ventilation_climate",
+            supported_features=ClimateEntityFeature.PRESET_MODE,
+        )
+    }
     thismodule.NUMBER_TYPES = {}
     thismodule.BINARY_TYPES = {}
 

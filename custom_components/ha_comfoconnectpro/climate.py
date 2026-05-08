@@ -80,7 +80,7 @@ class MyClimate(HubBackedEntity, ClimateEntity):
         if supply_hum is not None:
             self._attr_current_humidity = int(supply_hum)
 
-        if self._hub.data.get(C_STANDBY):
+        if self._hub.data.get(C_STANDBY) == "on":
             self._attr_hvac_action = HVACAction.IDLE
         else:
             profile = self._hub.data.get(C_TEMPERATURE_PROFILE)

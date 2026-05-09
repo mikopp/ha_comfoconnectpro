@@ -13,13 +13,16 @@ from homeassistant.components.climate.const import (
     PRESET_HOME,
     PRESET_SLEEP,
 )
+from homeassistant.const import ATTR_TEMPERATURE
 from homeassistant.core import callback
 
 from .const import (
+    C_EXTERNAL_SETPOINT,
     C_STANDBY,
     C_SUPPLY_HUMIDITY,
     C_SUPPLY_TEMPERATURE,
     C_TEMPERATURE_PROFILE,
+    C_TEMPERATURE_PROFILE_MODE,
     C_VENTILATION_PRESET,
     CLIMATE_TYPES,
     MyClimateEntityDescription,
@@ -69,6 +72,9 @@ class MyClimate(HubBackedEntity, ClimateEntity):
         self._attr_supported_features = description.supported_features
         self._attr_preset_modes = [PRESET_AWAY, PRESET_SLEEP, PRESET_HOME, PRESET_BOOST]
         self._attr_preset_mode = PRESET_HOME
+        self._attr_min_temp = 18.0
+        self._attr_max_temp = 29.0
+        self._attr_target_temperature_step = 0.1
 
     @callback
     def _on_hub_update(self) -> None:
@@ -93,7 +99,20 @@ class MyClimate(HubBackedEntity, ClimateEntity):
         if preset is not None:
             self._attr_preset_mode = self._DEVICE_TO_PRESET.get(preset, PRESET_HOME)
 
+        setpoint = self._hub.data.get(C_EXTERNAL_SETPOINT)
+        if setpoint is not None:
+            self._attr_target_temperature = float(setpoint)
+
         self.async_write_ha_state()
+
+    async def async_set_temperature(self, **kwargs) -> None:
+        """Set target temperature via external setpoint register."""
+        temp = kwargs.get(ATTR_TEMPERATURE)
+        if temp is None:
+            return
+        if self._hub.data.get(C_TEMPERATURE_PROFILE_MODE) == "adaptive":
+            return
+        await self._hub.write_entity_value(C_EXTERNAL_SETPOINT, temp)
 
     async def async_set_preset_mode(self, preset_mode: str) -> None:
         """Set ventilation preset."""

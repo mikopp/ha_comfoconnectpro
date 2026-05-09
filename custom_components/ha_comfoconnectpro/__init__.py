@@ -192,7 +192,6 @@ class MyModbusHub:
         if not self._sensors:
             return
 
-
         if not self._client.connect():
             _LOGGER.warning("Modbus connect failed")
             return
@@ -205,7 +204,6 @@ class MyModbusHub:
         if update_result:
             for update_callback in self._sensors:
                 update_callback()
-
 
     @property
     def name(self):
@@ -409,17 +407,25 @@ class MyModbusHub:
                 "Puffer hat keine Elemente. Fehler in Definition const.ENTITIES_DICT!!"
             )
 
-    def _validate_modbus_response(self, response, reg_type_name: str, attr_name: str) -> bool:
+    def _validate_modbus_response(
+        self, response, reg_type_name: str, attr_name: str
+    ) -> bool:
         """Validate a modbus response object. Returns False and logs error on failure."""
         if response is None:
-            _LOGGER.error(f"Fehler beim Lesen der {reg_type_name}: keine Antwort (None).")
+            _LOGGER.error(
+                f"Fehler beim Lesen der {reg_type_name}: keine Antwort (None)."
+            )
             return False
         if not hasattr(response, attr_name):
-            _LOGGER.error(f"Fehler beim Lesen der {reg_type_name}: ungültige Antwortstruktur.")
+            _LOGGER.error(
+                f"Fehler beim Lesen der {reg_type_name}: ungültige Antwortstruktur."
+            )
             return False
         if not getattr(response, attr_name):
             _LOGGER.error(f"Fehler beim Lesen der {reg_type_name}: leere Antwort.")
-            _LOGGER.error("Nach der Zeitumstellung (Sommer-/Winterzeit) muss das ComfoConnectPRO neu gestartet werden! (Stand V1.0.5)")
+            _LOGGER.error(
+                "Nach der Zeitumstellung (Sommer-/Winterzeit) muss das ComfoConnectPRO neu gestartet werden! (Stand V1.0.5)"
+            )
             return False
         return True
 
@@ -436,7 +442,9 @@ class MyModbusHub:
                     count=C_MAX_INPUT_REGISTER - C_MIN_INPUT_REGISTER + 1,
                     device_id=self._hostid,
                 )
-                if not self._validate_modbus_response(modbusdata_input, "Input-Register", "registers"):
+                if not self._validate_modbus_response(
+                    modbusdata_input, "Input-Register", "registers"
+                ):
                     return False
                 _LOGGER.debug(
                     f"{len(modbusdata_input.registers)} Input-Register: {modbusdata_input.registers}"
@@ -456,7 +464,9 @@ class MyModbusHub:
                     count=C_MAX_HOLDING_REGISTER - C_MIN_HOLDING_REGISTER + 1,
                     device_id=self._hostid,
                 )
-                if not self._validate_modbus_response(modbusdata_holding, "Holding-Register", "registers"):
+                if not self._validate_modbus_response(
+                    modbusdata_holding, "Holding-Register", "registers"
+                ):
                     return False
                 _LOGGER.debug(
                     f"{len(modbusdata_holding.registers)} Holding-Register: {modbusdata_holding.registers}"
@@ -474,7 +484,9 @@ class MyModbusHub:
                     count=C_MAX_COILS - C_MIN_COILS + 1,
                     device_id=self._hostid,
                 )
-                if not self._validate_modbus_response(modbusdata_coils, "Coils", "bits"):
+                if not self._validate_modbus_response(
+                    modbusdata_coils, "Coils", "bits"
+                ):
                     return False
                 _LOGGER.debug(
                     f"{len(modbusdata_coils.bits)} Coils: {modbusdata_coils.bits}"
@@ -494,7 +506,9 @@ class MyModbusHub:
                     count=C_MAX_DISCRETE_INPUTS - C_MIN_DISCRETE_INPUTS + 1,
                     device_id=self._hostid,
                 )
-                if not self._validate_modbus_response(modbusdata_discrete, "Discrete Inputs", "bits"):
+                if not self._validate_modbus_response(
+                    modbusdata_discrete, "Discrete Inputs", "bits"
+                ):
                     return False
                 _LOGGER.debug(
                     f"{len(modbusdata_discrete.bits)} Discrete Inputs: {modbusdata_discrete.bits}"
@@ -557,7 +571,6 @@ class MyModbusHub:
                   -1 & 0xFFFF → 65535
         """
         _LOGGER.info(f"Schreibzugriff auf Register {base_reg}: {reg_values}")
-
 
         if not self._client.connect():
             _LOGGER.warning("Modbus connect failed")

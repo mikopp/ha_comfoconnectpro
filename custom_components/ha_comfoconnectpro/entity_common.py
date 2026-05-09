@@ -24,9 +24,9 @@ _LOGGER.info(f"{thismodule} loaded.")
 
 T = TypeVar("T", bound=Entity)
 
+
 class HubBackedEntity(Entity):
     """Gemeinsame Basis: hält Hub-Referenz, Device-Info, Name/ID, Update-Hook."""
-
 
     # Beschreibungstyp ist je Plattform unterschiedlich (kommt aus const.py)
     entity_description: Any
@@ -77,8 +77,8 @@ class HubBackedEntity(Entity):
     def _apply_hub_payload(self, payload: Any) -> None:
         pass
 
-    #@property
-    #def name(self) -> str:
+    # @property
+    # def name(self) -> str:
     #    return f"{self.entity_description.name}"
 
     @property

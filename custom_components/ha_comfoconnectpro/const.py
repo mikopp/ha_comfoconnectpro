@@ -47,7 +47,6 @@ _LOGGER.setLevel(logging.DEBUG)
 _LOGGER.info(f"{thismodule} loaded")
 
 
-
 DOMAIN = "ha_comfoconnectpro"
 DEFAULT_NAME = "ComfoConnect PRO"
 DEFAULT_SCAN_INTERVAL = 15
@@ -56,7 +55,6 @@ DEFAULT_HOSTID = 1
 CONF_HOSTID = "hostid"
 CONF_HUB = "hacomfoconnectpro_hub"
 ATTR_MANUFACTURER = "Zehnder"
-
 
 
 # ------------------------------------------------------------
@@ -664,7 +662,9 @@ TEMP_UNITS = {"°C", "K"}
 def is_entity_readonly(props: Dict[str, Any]) -> bool:
     """Input-Register oder Discrete-Inputs oder Read-Only: RW=0)"""
     reg_type = get_entity_type(props)
-    return reg_type in [C_REG_TYPE_INPUT_REGISTERS, C_REG_TYPE_DISCRETE_INPUTS] or (props.get("RW") == 0)
+    return reg_type in [C_REG_TYPE_INPUT_REGISTERS, C_REG_TYPE_DISCRETE_INPUTS] or (
+        props.get("RW") == 0
+    )
 
 
 def is_entity_readwrite(props: Dict[str, Any]) -> bool:
@@ -945,7 +945,10 @@ def init():
             key="ventilation_climate",
             name="Climate",
             translation_key="ventilation_climate",
-            supported_features=ClimateEntityFeature.PRESET_MODE,
+            supported_features=(
+                ClimateEntityFeature.PRESET_MODE
+                | ClimateEntityFeature.TARGET_TEMPERATURE
+            ),
         )
     }
     thismodule.NUMBER_TYPES = {}

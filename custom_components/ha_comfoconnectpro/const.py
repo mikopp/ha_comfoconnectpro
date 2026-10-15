@@ -371,7 +371,7 @@ ENTITIES_DICT: Dict[str, Dict[str, Any]] = {
         "RT": C_REG_TYPE_INPUT_REGISTERS,
         "REG": 6,
         "NAME": "Zuluft Ventilator-Volumen ",
-        "UNIT": "m³",
+        "UNIT": "m³/h",
         "DT": C_DT_UINT16,
     },
     C_ROOM_TEMPERATURE: {

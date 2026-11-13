@@ -83,7 +83,7 @@ class MyClimate(HubBackedEntity, ClimateEntity):
     def _on_hub_update(self) -> None:
         supply_temp = self._hub.data.get(C_SUPPLY_TEMPERATURE)
         if supply_temp is not None:
-            self._attr_native_current_temperature = float(supply_temp)
+            self._attr_current_temperature = float(supply_temp)
 
         supply_hum = self._hub.data.get(C_SUPPLY_HUMIDITY)
         if supply_hum is not None:
@@ -104,7 +104,7 @@ class MyClimate(HubBackedEntity, ClimateEntity):
 
         setpoint = self._hub.data.get(C_EXTERNAL_SETPOINT)
         if setpoint is not None:
-            self._attr_native_target_temperature = float(setpoint)
+            self._attr_target_temperature = float(setpoint)
 
         self.async_write_ha_state()
 
